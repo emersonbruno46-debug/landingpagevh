@@ -443,79 +443,59 @@
     .solucao-left { display: flex; flex-direction: column; gap: 28px; }
     .solucao-sub { font-size: .95rem; line-height: 1.75; color: var(--text-mid); max-width: 480px; }
 
-    /* Mockup stack */
-    .solucao-right { position: relative; height: 460px; }
-    .mockup-stack { position: relative; width: 100%; height: 100%; }
+    /* Real mockup image + glass card */
+    .solucao-right { position: relative; display: flex; align-items: center; justify-content: center; }
+    .mockup-real-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .mockup-real-img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
 
-    /* Phone mockup */
-    .phone-mock {
+    /* Glass card overlay */
+    .ebook-glass-card {
       position: absolute;
-      width: 200px;
-      bottom: 0; left: 50%;
-      transform: translateX(-60%);
-      background: #1a1a2e;
-      border-radius: 32px;
-      padding: 12px 8px;
-      box-shadow: var(--shadow-lg);
-      z-index: 3;
-      border: 2px solid #2a2a4e;
+      bottom: 40px;
+      right: 0;
+      width: 155px;
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 14px;
+      padding: 16px 14px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.2);
+      border-top: 1px solid rgba(255,255,255,.45);
+      border-left: 1px solid rgba(255,255,255,.45);
+      z-index: 5;
     }
-    .phone-screen {
-      background: var(--white);
-      border-radius: 24px;
-      overflow: hidden;
+    .ebook-glass-badge {
+      font-size: .55rem; font-weight: 700;
+      color: var(--gold-light);
+      text-transform: uppercase; letter-spacing: .12em;
+      margin-bottom: 6px;
     }
-    .phone-header-bar {
-      background: var(--green-dark); padding: 10px 14px;
-      display: flex; align-items: center; gap: 8px;
+    .ebook-glass-title {
+      font-family: var(--font-display);
+      font-size: .95rem; font-weight: 800;
+      color: var(--white); line-height: 1.2;
+      margin-bottom: 4px;
     }
-    .phone-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--gold); flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .65rem; font-weight: 800; color: var(--green-dark);
+    .ebook-glass-sub { font-size: .62rem; color: rgba(255,255,255,.8); }
+    .ebook-glass-divider {
+      width: 36px; height: 2px;
+      background: var(--gold);
+      margin: 10px 0; border-radius: 2px;
     }
-    .phone-contact { flex: 1; }
-    .phone-name { font-size: .7rem; font-weight: 700; color: var(--white); }
-    .phone-status { font-size: .6rem; color: #4ade80; }
-    .phone-msgs { padding: 10px 8px; display: flex; flex-direction: column; gap: 6px; background: #e8f5e9; }
-    .msg-bubble {
-      max-width: 85%; border-radius: 12px; padding: 6px 10px;
-      font-size: .65rem; line-height: 1.4;
-    }
-    .msg-in { background: var(--white); color: var(--text-dark); align-self: flex-start; border-bottom-left-radius: 2px; }
-    .msg-out { background: #dcf8c6; color: #1a3a1a; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .ebook-glass-footer { font-size: .58rem; color: rgba(255,255,255,.55); }
 
-    /* Plano alimentar mockup */
-    .plano-mock {
-      position: absolute;
-      width: 180px;
-      top: 20px; left: 0;
-      background: var(--white);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--cream-dark);
-      z-index: 2;
-    }
-    .plano-title { font-size: .7rem; font-weight: 800; color: var(--green-dark); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .06em; }
-    .plano-line { height: 6px; border-radius: 3px; background: var(--cream-dark); margin-bottom: 6px; }
-    .plano-line.short { width: 60%; }
-    .plano-line.accent { background: rgba(196,155,61,.3); }
-
-    /* Ebook mockup */
-    .ebook-mock {
-      position: absolute;
-      width: 150px;
-      top: 30px; right: 0;
-      background: linear-gradient(135deg,var(--green-dark),var(--green-mid));
-      border-radius: var(--radius-md);
-      padding: 20px 16px;
-      box-shadow: var(--shadow-lg);
-      z-index: 2;
-    }
-    .ebook-badge { font-size: .55rem; font-weight: 700; color: var(--gold-light); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 6px; }
-    .ebook-title { font-family: var(--font-display); font-size: .9rem; font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 4px; }
-    .ebook-sub { font-size: .6rem; color: rgba(255,255,255,.7); }
-    .ebook-divider { width: 40px; height: 2px; background: var(--gold); margin: 10px 0; border-radius: 2px; }
 
     .solucao-cards {
       display: grid; grid-template-columns: repeat(4,1fr);
@@ -1513,52 +1493,21 @@
         </div>
       </div>
 
-      <!-- RIGHT: mockups -->
+      <!-- RIGHT: real mockup + glass card -->
       <div class="solucao-right reveal reveal-delay-3">
-        <div class="mockup-stack">
-          <!-- Plano alimentar paper -->
-          <div class="plano-mock">
-            <div class="plano-title">Plano Alimentar</div>
-            <div class="plano-line"></div>
-            <div class="plano-line short"></div>
-            <div class="plano-line accent"></div>
-            <div class="plano-line"></div>
-            <div class="plano-line short"></div>
-            <div class="plano-line"></div>
-            <div class="plano-line accent"></div>
-            <div class="plano-line short"></div>
-            <div class="plano-line"></div>
-            <div class="plano-line"></div>
-            <div class="plano-line short accent"></div>
-            <div class="plano-line"></div>
-          </div>
-
-          <!-- Phone with WhatsApp chat -->
-          <div class="phone-mock">
-            <div class="phone-screen">
-              <div class="phone-header-bar">
-                <div class="phone-avatar">VH</div>
-                <div class="phone-contact">
-                  <div class="phone-name">Nutri Victor Hugo</div>
-                  <div class="phone-status">● online</div>
-                </div>
-              </div>
-              <div class="phone-msgs">
-                <div class="msg-bubble msg-out">Olá, como vai?</div>
-                <div class="msg-bubble msg-in">Oi! Aqui está o seu plano alimentar personalizado.</div>
-                <div class="msg-bubble msg-out">Qualquer dúvida estou à disposição.</div>
-                <div class="msg-bubble msg-in">Perfeito! Muito obrigado! 😊</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ebook -->
-          <div class="ebook-mock">
-            <div class="ebook-badge">Incluso</div>
-            <div class="ebook-title">Receitas Saudáveis</div>
-            <div class="ebook-sub">Práticas e deliciosas</div>
-            <div class="ebook-divider"></div>
-            <div style="font-size:.55rem;color:rgba(255,255,255,.5);">E-book + Lista de compras</div>
+        <div class="mockup-real-wrap">
+          <img
+            src="MOCKUP-CELULAR.png"
+            alt="Mockup do aplicativo de acompanhamento nutricional"
+            class="mockup-real-img"
+          />
+          <!-- Glass card: Receitas Saudáveis -->
+          <div class="ebook-glass-card">
+            <div class="ebook-glass-badge">Incluso</div>
+            <div class="ebook-glass-title">Receitas Saudáveis</div>
+            <div class="ebook-glass-sub">Práticas e deliciosas</div>
+            <div class="ebook-glass-divider"></div>
+            <div class="ebook-glass-footer">E-book + Lista de compras</div>
           </div>
         </div>
       </div>
