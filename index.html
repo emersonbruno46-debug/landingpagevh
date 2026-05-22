@@ -7,6 +7,7 @@
   <meta name="description" content="Agende sua consulta com o Nutricionista Victor Hugo de Paula, CRN9-29280. Atendimento presencial em Lima Duarte/MG, domiciliar e online para hipertrofia, emagrecimento, reeducação alimentar, recomposição corporal e saúde metabólica." />
   <meta name="keywords" content="nutricionista em Lima Duarte MG, nutricionista online, nutricionista para emagrecimento, nutricionista para hipertrofia, reeducação alimentar, recomposição corporal, nutrição clínica, saúde metabólica, plano alimentar personalizado" />
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0A331B" />
   <meta property="og:title" content="Nutricionista em Lima Duarte/MG | Victor Hugo de Paula" />
   <meta property="og:description" content="Acompanhamento nutricional individualizado. Presencial, domiciliar e online." />
   <meta property="og:type" content="website" />
@@ -45,13 +46,14 @@
       --font-display: 'DM Sans', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       font-family: var(--font-body);
       background: var(--white);
       color: var(--text-dark);
       overflow-x: hidden;
+      width: 100%;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -72,7 +74,7 @@
       content: ''; flex: 1; height: 1px; background: var(--gold); width: 24px;
     }
 
-    h1, h2, h3, h4 { line-height: 1.2; }
+    h1, h2, h3, h4 { line-height: 1.2; word-break: break-word; }
 
     .headline-xl {
       font-family: var(--font-display);
@@ -115,7 +117,10 @@
       padding: 16px 32px; border-radius: 50px;
       font-size: .95rem; font-weight: 700; letter-spacing: .02em;
       transition: var(--transition);
-      white-space: nowrap;
+      white-space: normal;
+      text-align: center;
+      justify-content: center;
+      line-height: 1.3;
     }
     .btn-gold {
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
@@ -1162,7 +1167,6 @@
         display: flex !important;
         flex-wrap: nowrap !important;
         overflow-x: auto;
-        scroll-snap-type: x mandatory;
         gap: 16px;
         padding-bottom: 24px;
         -webkit-overflow-scrolling: touch;
@@ -1175,7 +1179,6 @@
       .mobile-carousel::-webkit-scrollbar { display: none; }
       .mobile-carousel > * {
         flex: 0 0 85%;
-        scroll-snap-align: center;
       }
 
       .dores-grid { grid-template-columns: repeat(2,1fr); }
@@ -1208,8 +1211,6 @@
       .trust-logo { grid-column: 1/-1; }
 
       .footer-top { grid-template-columns: 1fr; }
-
-      #wa-float { display: block; }
     }
 
     @media (max-width: 480px) {
@@ -2260,14 +2261,6 @@
   </div>
 </footer>
 
-<!-- WhatsApp Floating (mobile only) -->
-<div id="wa-float" aria-label="Agendar consulta pelo WhatsApp">
-  <a href="https://wa.me/5532988414847?text=Ol%C3%A1%2C%20Victor%21%20Vim%20pela%20landing%20page%20e%20gostaria%20de%20agendar%20uma%20consulta%20nutricional." target="_blank" rel="noopener" id="wa-float-btn">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.115.549 4.099 1.513 5.824L.057 23.886a.5.5 0 0 0 .611.61l6.157-1.437A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.815 9.815 0 0 1-5.011-1.369l-.36-.213-3.731.871.914-3.625-.234-.375A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
-    Agendar consulta
-  </a>
-</div>
-
 <!-- ============================================================
      JAVASCRIPT
 ============================================================ -->
@@ -2354,6 +2347,33 @@
         el.classList.add('visible');
       });
     }, 200);
+
+    /* ---- Auto-scroll mobile carousels ---- */
+    const carousels = document.querySelectorAll('.mobile-carousel');
+    carousels.forEach(carousel => {
+      let scrollDirection = 1;
+      let autoScrollTimer;
+
+      function startAutoScroll() {
+        if (window.innerWidth > 768) return;
+        autoScrollTimer = setInterval(() => {
+          carousel.scrollLeft += scrollDirection;
+          if (carousel.scrollLeft >= (carousel.scrollWidth - carousel.clientWidth - 1)) {
+            scrollDirection = -1;
+          } else if (carousel.scrollLeft <= 0) {
+            scrollDirection = 1;
+          }
+        }, 30);
+      }
+      
+      carousel.addEventListener('touchstart', () => clearInterval(autoScrollTimer), {passive: true});
+      carousel.addEventListener('touchend', () => {
+        clearInterval(autoScrollTimer);
+        setTimeout(startAutoScroll, 2000);
+      }, {passive: true});
+
+      startAutoScroll();
+    });
   });
 </script>
 
