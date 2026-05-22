@@ -74,7 +74,7 @@
       content: ''; flex: 1; height: 1px; background: var(--gold); width: 24px;
     }
 
-    h1, h2, h3, h4 { line-height: 1.2; word-break: break-word; }
+    h1, h2, h3, h4 { line-height: 1.2; word-break: normal; overflow-wrap: break-word; }
 
     .headline-xl {
       font-family: var(--font-display);
@@ -1170,8 +1170,12 @@
         gap: 16px;
         padding-bottom: 24px;
         -webkit-overflow-scrolling: touch;
-        margin-left: -24px;
-        margin-right: -24px;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
         padding-left: 24px;
         padding-right: 24px;
         scrollbar-width: none;
@@ -2352,27 +2356,26 @@
     const carousels = document.querySelectorAll('.mobile-carousel');
     carousels.forEach(carousel => {
       let scrollDirection = 1;
-      let autoScrollTimer;
+      let isPaused = false;
 
-      function startAutoScroll() {
-        if (window.innerWidth > 768) return;
-        autoScrollTimer = setInterval(() => {
-          carousel.scrollLeft += scrollDirection;
+      function autoScroll() {
+        if (window.innerWidth <= 768 && !isPaused) {
+          carousel.scrollLeft += scrollDirection * 0.7; // velocidade suave
           if (carousel.scrollLeft >= (carousel.scrollWidth - carousel.clientWidth - 1)) {
             scrollDirection = -1;
           } else if (carousel.scrollLeft <= 0) {
             scrollDirection = 1;
           }
-        }, 30);
+        }
+        requestAnimationFrame(autoScroll);
       }
       
-      carousel.addEventListener('touchstart', () => clearInterval(autoScrollTimer), {passive: true});
+      carousel.addEventListener('touchstart', () => isPaused = true, {passive: true});
       carousel.addEventListener('touchend', () => {
-        clearInterval(autoScrollTimer);
-        setTimeout(startAutoScroll, 2000);
+        setTimeout(() => isPaused = false, 3000);
       }, {passive: true});
 
-      startAutoScroll();
+      requestAnimationFrame(autoScroll);
     });
   });
 </script>
