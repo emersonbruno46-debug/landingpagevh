@@ -202,7 +202,11 @@
       padding: 20px 0; gap: 24px;
     }
     .header-logo { display: flex; align-items: center; flex-shrink: 0; }
-    .header-logo img { height: 120px; width: auto; }
+    .header-logo img {
+      height: 120px; width: auto;
+      filter: brightness(0) invert(1);
+      -webkit-filter: brightness(0) invert(1);
+    }
 
     .header-nav { display: flex; align-items: center; gap: 36px; }
     .header-nav a {
@@ -635,7 +639,11 @@
     .vh-logo-wrap {
       display: flex; justify-content: center; margin-bottom: 32px;
     }
-    .vh-logo-wrap img { height: 200px; width: auto; }
+    .vh-logo-wrap img {
+      height: 200px; width: auto;
+      filter: brightness(0) invert(1);
+      -webkit-filter: brightness(0) invert(1);
+    }
 
     .vh-gold-divider {
       width: 100%; height: 1px;
@@ -1043,7 +1051,11 @@
     }
     .trust-item svg { width: 28px; height: 28px; stroke: var(--gold); fill: none; stroke-width: 1.8; flex-shrink: 0; }
     .trust-logo { display: flex; justify-content: center; }
-    .trust-logo img { height: 100px; width: auto; opacity: .7; }
+    .trust-logo img {
+      height: 100px; width: auto; opacity: .85;
+      filter: brightness(0) invert(1);
+      -webkit-filter: brightness(0) invert(1);
+    }
 
     /* ============================================================
        FOOTER
@@ -1058,7 +1070,11 @@
       border-bottom: 1px solid rgba(255,255,255,.1);
     }
     .footer-brand { display: flex; flex-direction: column; gap: 16px; }
-    .footer-brand img { height: 140px; width: auto; }
+    .footer-brand img {
+      height: 140px; width: auto;
+      filter: brightness(0) invert(1);
+      -webkit-filter: brightness(0) invert(1);
+    }
     .footer-brand-name {
       font-size: .9rem; font-weight: 700; color: var(--white); line-height: 1.4;
     }
@@ -1197,14 +1213,14 @@
       .section { padding: 56px 0; }
       .section-sm { padding: 40px 0; }
 
-      /* Mobile Header: 72px-80px height, logo aligned left with increased presence, hamburger on right */
+      /* Mobile Header: 76px-82px height, logo enlarged for stronger visual presence */
       .header-inner {
-        height: 76px;
-        padding: 12px 0;
+        height: 80px;
+        padding: 10px 0;
         gap: 16px;
       }
       .header-logo img {
-        height: 48px;
+        height: 60px;
         width: auto;
       }
       .header-nav { display: none; }
@@ -1389,6 +1405,7 @@
       .trust-logo { grid-column: 1/-1; }
 
       .footer-top { grid-template-columns: 1fr; }
+      .footer-brand img { height: 165px; width: auto; }
     }
 
     @media (max-width: 480px) {
