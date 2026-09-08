@@ -343,25 +343,63 @@
       position: relative; z-index: 2;
       width: 100%; max-width: 800px;
       flex-shrink: 0;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0.3) 92%, rgba(0,0,0,0) 100%);
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0.3) 92%, rgba(0,0,0,0) 100%);
+    }
+    .hero-photo-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 22%;
+      background: linear-gradient(to bottom, transparent 0%, rgba(10,51,27,0.75) 65%, rgba(10,51,27,1) 100%);
+      pointer-events: none;
+      z-index: 3;
     }
     .hero-photo-wrap img {
       width: 100%; object-fit: contain;
     }
 
-    /* Floating cards — all 4 stacked on the RIGHT side, evenly spaced */
+    /* Floating cards — Liquid Weather Glass Effect with 3D tilt & dynamic sheen */
     .float-card {
       position: absolute; z-index: 5;
-      background: rgba(255,255,255,.15);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(255,255,255,.14);
+      backdrop-filter: blur(24px) contrast(105%);
+      -webkit-backdrop-filter: blur(24px) contrast(105%);
       border-radius: var(--radius-md);
-      padding: 8px 14px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.3);
-      border: 1px solid rgba(255,255,255,.2);
-      border-top: 1px solid rgba(255,255,255,.45);
-      border-left: 1px solid rgba(255,255,255,.45);
-      width: 165px;
+      padding: 10px 14px;
+      box-shadow: 
+        inset 2px 2px 4px 0 rgba(255, 255, 255, 0.45),
+        inset -2px -2px 4px 0 rgba(255, 255, 255, 0.2),
+        0 10px 32px rgba(0,0,0,.35),
+        0 0 24px rgba(196,155,61,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      width: 170px;
       animation: float 4s ease-in-out infinite;
+      transform-style: preserve-3d;
+      transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease, border-color 0.25s ease;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .float-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.25) 48%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0.25) 52%, transparent 65%);
+      transform: translateX(-100%) rotate(-15deg);
+      transition: transform 0.7s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .float-card:hover::before {
+      transform: translateX(100%) rotate(-15deg);
+    }
+    .float-card:hover {
+      border-color: rgba(237,196,99,0.85);
+      box-shadow: 
+        inset 2px 2px 6px 0 rgba(255, 255, 255, 0.6),
+        inset -2px -2px 6px 0 rgba(255, 255, 255, 0.35),
+        0 14px 44px rgba(0,0,0,.45),
+        0 0 32px rgba(196,155,61,.45);
     }
     .float-card:nth-child(2) { animation-delay: -1s; }
     .float-card:nth-child(3) { animation-delay: -2s; }
@@ -435,31 +473,47 @@
     #solucao {
       background: linear-gradient(160deg, var(--white) 0%, var(--cream) 60%, rgba(32,107,63,.06) 100%);
       position: relative;
-      overflow: visible;
+      overflow: hidden;
     }
     .solucao-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 72px; align-items: center;
+      display: grid; grid-template-columns: 1fr 1.05fr;
+      gap: 48px; align-items: center;
     }
     .solucao-left { display: flex; flex-direction: column; gap: 28px; }
     .solucao-sub { font-size: .95rem; line-height: 1.75; color: var(--text-mid); max-width: 480px; }
 
-    /* Real mockup image + glass card */
-    .solucao-right { position: relative; display: flex; align-items: center; justify-content: center; }
+    /* Real mockup image + glass card - emerging from lateral side of page */
+    .solucao-right { 
+      position: relative; 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-end; 
+      width: 100%;
+    }
     .mockup-real-wrap {
       position: relative;
       display: inline-flex;
       align-items: flex-end;
       justify-content: center;
-      padding-bottom: 80px;
+      padding-bottom: 60px;
+      margin-right: -110px; /* Emerges right from the lateral side edge of the page */
       overflow: visible;
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease;
+      opacity: 0;
+      transform: translateX(140px) rotate(3deg);
+    }
+    .solucao-right.visible .mockup-real-wrap,
+    .mockup-real-wrap.visible {
+      opacity: 1;
+      transform: translateX(35px) rotate(0deg);
     }
     .mockup-real-img {
       width: 100%;
-      max-width: 800px;
+      max-width: 720px;
       height: auto;
       display: block;
       object-fit: contain;
+      filter: drop-shadow(-16px 20px 36px rgba(10,51,27,.22));
     }
 
     /* Glass card overlay */
@@ -674,6 +728,17 @@
     }
     .sobre-photo-wrap {
       position: relative;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0.3) 92%, rgba(0,0,0,0) 100%);
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0.3) 92%, rgba(0,0,0,0) 100%);
+    }
+    .sobre-photo-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 22%;
+      background: linear-gradient(to bottom, transparent 0%, rgba(10,51,27,0.75) 65%, rgba(10,51,27,1) 100%);
+      pointer-events: none;
+      z-index: 3;
     }
     .sobre-photo-wrap img {
       width: 100%; max-width: 600px;
@@ -1174,7 +1239,21 @@
       .dores-grid { grid-template-columns: repeat(2,1fr); }
       .solucao-inner { grid-template-columns: 1fr; }
       .solucao-cards { grid-template-columns: repeat(2,1fr); }
-      .solucao-right { display: none; }
+      .solucao-right { 
+        display: flex; 
+        justify-content: center; 
+        width: 100%; 
+        overflow: hidden; 
+        margin-top: 32px; 
+      }
+      .mockup-real-wrap {
+        margin-right: -40px;
+        transform: translateX(60px);
+      }
+      .solucao-right.visible .mockup-real-wrap,
+      .mockup-real-wrap.visible {
+        transform: translateX(10px);
+      }
 
       .servicos-grid { grid-template-columns: 1fr; }
       .vh-block { display: none; }
@@ -1211,8 +1290,17 @@
       .sobre-seals { grid-template-columns: 1fr; }
     }
   </style>
-</head>
 <body>
+
+<!-- SVG Filter for Liquid Weather Glass effect -->
+<svg class="hidden-glass-filter" style="display:none; position:absolute; width:0; height:0;" aria-hidden="true">
+  <defs>
+    <filter id="glass-blur" x="0" y="0" width="100%" height="100%" filterUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.003 0.007" numOctaves="1" result="turbulence" />
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="120" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </defs>
+</svg>
 
 <!-- ============================================================
      HEADER
@@ -2353,13 +2441,26 @@
     });
   }, { passive: true });
 
-  /* ---- Smooth entrance for hero elements ---- */
+  /* ---- Smooth entrance for hero elements & 3D liquid glass card tilt ---- */
   window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       document.querySelectorAll('#hero .reveal').forEach(el => {
         el.classList.add('visible');
       });
     }, 200);
+
+    /* ---- Interactive 3D tilt on Liquid Glass Float Cards ---- */
+    document.querySelectorAll('.float-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `rotateY(${px * 24}deg) rotateX(${-py * 24}deg) translateZ(14px) scale(1.06)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1)';
+      });
+    });
 
     /* ---- Auto-scroll mobile carousels ---- */
     const carousels = document.querySelectorAll('.mobile-carousel');
